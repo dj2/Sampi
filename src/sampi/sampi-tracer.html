@@ -1,6 +1,8 @@
 <link rel='import' href='/components/polymer/polymer.html'>
 <link rel='import' href='/components/paper-button/paper-button.html'>
 
+<script src='/js/scene.js'></script>
+
 <dom-module id='sampi-tracer'>
   <template>
     <style>
@@ -40,7 +42,7 @@
     height_: 500,
 
     ready: function() {
-      this.setupSizes_();
+      this.updateSizes_();
 
       this.ctx_ = this.$.canvas.getContext('2d');
 
@@ -48,7 +50,7 @@
       this.ctx_.fillRect(0, 0, 500, 500);
     },
 
-    setupSizes_: function() {
+    updateSizes_: function() {
       let canvas = this.$.canvas;
       canvas.width = this.width_;
       canvas.height = this.height_;
@@ -63,10 +65,21 @@
 
     trace: function() {
       let imageData = this.ctx_.getImageData(0, 0, this.width_, this.height_);
-      let sceneData = this.$.text.value;
 
+      let scene = new Scene(this.$.text.value);
+      let renderer = scene.createRenderer(imageData);
 
-      this.$.img.src = this.$.canvas.toDataURL('image/png');
+      renderer.render()
+        .then((result) => {
+          this.width_ = scene.width();
+          this.height_ = scene.height();
+          this.updateSizes_();
+
+          this.$.img.src = this.$.canvas.toDataURL('image/png');
+        })
+        .catch((reason) => {
+          console.log(reason);
+        });
     }
   });
   </script>
