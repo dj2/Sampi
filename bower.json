@@ -1,0 +1,19 @@
+{
+  "name": "Sampi",
+  "version": "0.0.1",
+  "authors": [
+    "dan sinclair <dj2@everburning.com>"
+  ],
+  "description": "Raytracer",
+  "keywords": [
+    "Raytracer"
+  ],
+  "license": "BSD",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "test",
+    "tests"
+  ]
+}

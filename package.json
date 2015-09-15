@@ -1,0 +1,18 @@
+{
+  "name": "Sampi",
+  "version": "0.0.1",
+  "description": "Raytracer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "bitbucket.org/dj2/Sampi"
+  },
+  "keywords": [
+    "Raytracer"
+  ],
+  "author": "dan sinclair <dj2@everburning.com>",
+  "license": "BSD"
+}
