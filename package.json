@@ -14,5 +14,11 @@
     "Raytracer"
   ],
   "author": "dan sinclair <dj2@everburning.com>",
-  "license": "BSD"
+  "license": "BSD",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-csslint": "^0.2.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-webserver": "^0.9.1"
+  }
 }

@@ -1,0 +1,73 @@
+<link rel='import' href='/components/polymer/polymer.html'>
+<link rel='import' href='/components/paper-button/paper-button.html'>
+
+<dom-module id='sampi-tracer'>
+  <template>
+    <style>
+    :host { display: block; }
+
+    paper-button {
+      background-color: green;
+      color: white;
+    }
+    textarea { margin: 10px; }
+    img {
+      margin: 10px;
+      border: 1px solid #aaa;
+    }
+    canvas { display: none; }
+    </style>
+
+    <div class='layout horizontal'>
+      <div class='layout vertical'>
+        <textarea id='text' rows='40' cols='100'></textarea>
+        <paper-button raised on-click='trace'>trace</paper-button>
+      </div>
+
+      <div class='layout horizontal end-justified flex'>
+        <img src='' id='img' width='500' height='500'>
+        <canvas id='canvas' width='500' height='500'></canvas>
+      </div>
+    </div>
+  </template>
+
+  <script>
+  Polymer({
+    is: 'sampi-tracer',
+
+    ctx_: undefined,
+    width_: 500,
+    height_: 500,
+
+    ready: function() {
+      this.setupSizes_();
+
+      this.ctx_ = this.$.canvas.getContext('2d');
+
+      this.ctx_.fillStyle = 'white';
+      this.ctx_.fillRect(0, 0, 500, 500);
+    },
+
+    setupSizes_: function() {
+      let canvas = this.$.canvas;
+      canvas.width = this.width_;
+      canvas.height = this.height_;
+
+      canvas.style.width = this.width_ + 'px';
+      canvas.style.height = this.height_ + 'px';
+
+      let img = this.$.img;
+      img.style.width = this.width_ + 'px';
+      img.style.height = this.height_ + 'px';
+    },
+
+    trace: function() {
+      let imageData = this.ctx_.getImageData(0, 0, this.width_, this.height_);
+      let sceneData = this.$.text.value;
+
+
+      this.$.img.src = this.$.canvas.toDataURL('image/png');
+    }
+  });
+  </script>
+</dom-module>

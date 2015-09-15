@@ -1,0 +1,15 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+paper-toolbar {
+  background-color: #f44336;
+}
+
+header {
+  font-size: 46px;
+  color: white;
+  line-height: 60px;
+  text-transform: lowercase;
+}
