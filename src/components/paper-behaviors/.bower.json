@@ -6,8 +6,7 @@
     "The Polymer Authors"
   ],
   "main": [
-    "paper-button-behavior.html",
-    "paper-radio-button-behavior.html"
+    "paper-button-behavior.html"
   ],
   "keywords": [
     "web-components",

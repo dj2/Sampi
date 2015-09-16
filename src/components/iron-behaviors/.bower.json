@@ -11,7 +11,6 @@
     "url": "git://github.com/PolymerElements/iron-behaviors.git"
   },
   "main": [
-    "iron-button-state.html",
     "iron-control-state.html"
   ],
   "license": "http://polymer.github.io/LICENSE.txt",
