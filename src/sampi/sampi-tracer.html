@@ -54,7 +54,6 @@ require(['/js/importer.js', '/js/renderer.js']);
       this.updateSizes_();
 
       this.ctx_ = this.$.canvas.getContext('2d');
-
       this.ctx_.fillStyle = 'white';
       this.ctx_.fillRect(0, 0, 500, 500);
     },
@@ -87,12 +86,11 @@ require(['/js/importer.js', '/js/renderer.js']);
           this.$.img.src = this.$.canvas.toDataURL('image/png');
         })
         .then((msg) => {
-            console.log(msg);
+          this.$.img.src = this.$.canvas.toDataURL('image/png');
           this.$.status.textContent = 'render complete';
         })
         .catch((reason) => {
-          this.$.status.textContent = 'render error';
-          console.log(reason);
+          this.$.status.textContent = 'render error: ' + reason;
         });
     }
   });

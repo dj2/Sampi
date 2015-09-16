@@ -5,7 +5,7 @@ class Renderer {
     return {
       render: function(output, cb) {
         return new Promise((resolve, reject) => {
-          resolve('whee ' + data);
+          resolve('whee');
         });
       }
     };
