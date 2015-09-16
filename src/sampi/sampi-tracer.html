@@ -1,7 +1,10 @@
 <link rel='import' href='/components/polymer/polymer.html'>
 <link rel='import' href='/components/paper-button/paper-button.html'>
 
-<script src='/js/scene.js'></script>
+<script src='/components/requirejs/require.js'></script>
+<script>
+require(['/js/importer.js', '/js/renderer.js']);
+</script>
 
 <dom-module id='sampi-tracer'>
   <template>
@@ -22,11 +25,15 @@
 
     <div class='layout horizontal'>
       <div class='layout vertical'>
-        <textarea id='text' rows='40' cols='100'></textarea>
+        <textarea id='text' rows='40' cols='100'>
+          {"width": 200, "height": 200}
+        </textarea>
         <paper-button raised on-click='trace'>trace</paper-button>
       </div>
 
-      <div class='layout horizontal end-justified flex'>
+      <div class='layout vertical start flex'>
+        <span id='status'></span>
+
         <img src='' id='img' width='500' height='500'>
         <canvas id='canvas' width='500' height='500'></canvas>
       </div>
@@ -34,6 +41,8 @@
   </template>
 
   <script>
+  'use strict';
+
   Polymer({
     is: 'sampi-tracer',
 
@@ -64,23 +73,29 @@
     },
 
     trace: function() {
+      this.$.status.textContent = 'rendering ...';
+
+      let scene = Importer.importScene(this.$.text.value);
+      this.width_ = scene.width();
+      this.height_ = scene.height();
+      this.updateSizes_();
+
+      let renderer = Renderer.createRenderer(scene);
       let imageData = this.ctx_.getImageData(0, 0, this.width_, this.height_);
 
-      let scene = new Scene(this.$.text.value);
-      let renderer = scene.createRenderer(imageData);
-
-      renderer.render()
-        .then((result) => {
-          this.width_ = scene.width();
-          this.height_ = scene.height();
-          this.updateSizes_();
-
+      renderer.render(imageData, () => {
           this.$.img.src = this.$.canvas.toDataURL('image/png');
         })
+        .then((msg) => {
+            console.log(msg);
+          this.$.status.textContent = 'render complete';
+        })
         .catch((reason) => {
+          this.$.status.textContent = 'render error';
           console.log(reason);
         });
     }
   });
   </script>
 </dom-module>
+
