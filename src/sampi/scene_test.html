@@ -1,0 +1,24 @@
+<!doctype html>
+
+<script>
+'use strict';
+
+describe('Scene', () => {
+  it ('is sealed', () => {
+    let scene = new Scene();
+    expect(() => { scene.unknown_method = 'bar'; }).toThrowError(/object is not extensible/);
+  });
+
+  it ('stores width/height', () => {
+    let scene = new Scene();
+    expect(scene.width).toBe(500);
+    expect(scene.height).toBe(500);
+
+    scene.width = 250;
+    scene.height = 350;
+
+    expect(scene.width).toBe(250);
+    expect(scene.height).toBe(350);
+  });
+});
+</script>

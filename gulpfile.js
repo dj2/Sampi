@@ -10,7 +10,7 @@ gulp.task('css', function() {
     .pipe(csslint.reporter())
 });
 
-gulp.task('server', ['scripts', 'css'], function() {
+gulp.task('server', ['css'], function() {
   gulp.watch('src/css/*.css', ['css'])
 
   gulp.src('src')
