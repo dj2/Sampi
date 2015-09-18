@@ -1,10 +1,8 @@
 <link rel='import' href='/components/polymer/polymer.html'>
 <link rel='import' href='/components/paper-button/paper-button.html'>
 
-<script src='/components/requirejs/require.js'></script>
-<script>
-require(['/js/importer.js', '/js/renderer.js']);
-</script>
+<link rel='import' href='/sampi/importer.html'>
+<link rel='import' href='/sampi/renderer.html'>
 
 <dom-module id='sampi-tracer'>
   <template>
@@ -69,6 +67,8 @@ require(['/js/importer.js', '/js/renderer.js']);
       this.ctx_ = this.$.canvas.getContext('2d');
       this.ctx_.fillStyle = 'white';
       this.ctx_.fillRect(0, 0, 500, 500);
+
+      this.trace();
     },
 
     updateSizes_: function() {
