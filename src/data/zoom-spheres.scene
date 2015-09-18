@@ -1,0 +1,90 @@
+scene {
+  width 512
+  height 512
+
+  background_colour .8, .8, .8
+
+  sampler "single"
+  #sampler "adaptive_random"
+  #sampler "jittered"
+  samples 25
+
+  max_reflections 5
+}
+
+projection_camera {
+  position 0, 100, 50
+  view_direction 0, -1, -1
+  up 0, 1, 0
+  image_plane -0.1, 0.1, -0.1, 0.1
+  distance_to_plane 0.1
+}
+
+plane {
+  point 0, -2, 0
+  normal 0, 1, 0
+
+  material {
+    diffuse {
+      checker_texture {
+        colour 1, 0, 0
+        colour 0, 1, 0
+        colour 0, 0, 1
+      }
+      colour .4, .4, .4
+    }
+    reflect 0.4
+  }
+}
+
+sphere {
+  position -14, 0, -17
+  radius 3
+
+  material {
+    ambient {
+      colour 0.2, 0, 0
+    }
+    diffuse {
+      colour 1, 0, 0
+    }
+  }
+}
+
+sphere {
+  position 0, 15, -17
+  radius 10
+
+  material {
+    ambient {
+      colour 0, 0.2, 0
+    }
+    diffuse {
+      colour 0, 0.5, 0
+    }
+    specular {
+      colour 0.5, 0.5, 0.5
+    }
+    specular_power 32
+  }
+}
+
+sphere {
+  position 14, 0, -17
+  radius 3
+
+  material {
+    ambient {
+      colour 0, 0, 0.2
+    }
+    diffuse {
+      colour 0, 0, 1
+    }
+    reflect 0.8
+  }
+}
+
+point_light {
+  position -4, 104, 103
+  colour 1, 1, 1
+}

@@ -1,0 +1,59 @@
+scene {
+  width 512
+  height 512
+
+  background_colour .8, .8, .8
+
+  sampler "single"
+  #sampler "adaptive_random"
+  #sampler "jittered"
+  samples 25
+
+  max_reflections 5
+}
+
+projection_camera {
+  position -2, 2, 5
+  view_direction 1, -1, -1
+  up 0, 1, 0
+  image_plane -0.1, 0.1, -0.1, 0.1
+  distance_to_plane 0.1
+}
+
+plane {
+  point 0, -2, 0
+  normal 0, 1, 0
+
+  material {
+    ambient {
+      colour 0.2, 0.2, 0.2
+    }
+    diffuse {
+      colour 1, 1, 1
+    }
+    reflect 0.5
+  }
+}
+
+triangle_mesh {
+  position 0, 0, -7
+  source "data/scenes/cube.obj"
+
+  material {
+    ambient {
+      colour 0, 0.2, 0
+    }
+    diffuse {
+      colour 0, 0.5, 0
+    }
+    specular {
+      colour 0.5, 0.5, 0.5
+    }
+    specular_power 32
+  }
+}
+
+point_light {
+  position -4, 4, -3
+  colour 1, 1, 1
+}

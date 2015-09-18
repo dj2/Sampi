@@ -1,0 +1,36 @@
+scene {
+  width 512
+  height 512
+
+  background_colour .8, .8, .8
+
+  sampler "single"
+  #sampler "adaptive_random"
+  #sampler "jittered"
+  samples 25
+
+  max_reflections 0
+}
+
+projection_camera {
+  position 0, -10, 0
+  view_direction 1, 0, 0
+  up 0, 1, 0
+  image_plane -0.1, 0.1, -0.1, 0.1
+  distance_to_plane 0.1
+}
+
+triangle_mesh {
+  source "data/scenes/sibenik2.obj"
+
+  material {
+    diffuse {
+      colour 1, 1, 1
+    }
+  }
+}
+
+point_light {
+  position 0, 0, 0
+  colour 1, 1, 1
+}

@@ -1,0 +1,146 @@
+scene {
+  width 512
+  height 512
+
+  background_colour .8, .8, .8
+
+  #sampler "single"
+  #sampler "adaptive_random"
+  sampler "jittered"
+  samples 25
+
+  max_reflections 5
+  num_threads 2
+}
+
+orthographic_camera {
+  position 0, 0, 0
+  view_direction 0, 0, -1
+  up 0, 1, 0
+  image_plane -5.5, 5.5, -5.5, 5.5
+}
+
+point_light {
+  position -4, 4, -3
+  colour 1, 1, 1
+}
+
+# first row
+sphere {
+  position -4.2, 4.2, -7
+  radius 1
+  material "brass"
+}
+
+sphere {
+  position -2.1, 4.2, -7
+  radius 1
+  material "bronze"
+}
+
+sphere {
+  position 0, 4.2, -7
+  radius 1
+  material "polished_bronze"
+}
+
+sphere {
+  position 2.1, 4.2, -7
+  radius 1
+  material "chrome"
+}
+
+sphere {
+  position 4.2, 4.2, -7
+  radius 1
+  material "copper"
+}
+
+# second row
+sphere {
+  position -4.2, 2.1, -7
+  radius 1
+  material "polished_copper"
+}
+
+sphere {
+  position 0, 2.1, -7
+  radius 1
+  material "gold"
+}
+
+sphere {
+  position 4.2, 2.1, -7
+  radius 1
+  material "polished_gold"
+}
+
+# third row
+sphere {
+  position -4.2, 0, -7
+  radius 1
+  material "pewter"
+}
+
+sphere {
+  position 0, 0, -7
+  radius 1
+  material "silver"
+}
+
+sphere {
+  position 4.2, 0, -7
+  radius 1
+  material "polished_silver"
+}
+
+# forth row
+sphere {
+  position -4.2, -2.1, -7
+  radius 1
+  material "emerald"
+}
+
+sphere {
+  position 0, -2.1, -7
+  radius 1
+  material "jade"
+}
+
+sphere {
+  position 4.2, -2.1, -7
+  radius 1
+  material "obsidian"
+}
+
+# fifth row
+sphere {
+  position -4.2, -4.2, -7
+  radius 1
+  material "pearl"
+}
+
+sphere {
+  position -2.1, -4.2, -7
+  radius 1
+  material "ruby"
+}
+
+sphere {
+  position 0, -4.2, -7
+  radius 1
+  material "turquoise"
+}
+
+sphere {
+  position 2.1, -4.2, -7
+  radius 1
+  material "black_plastic"
+}
+
+sphere {
+  position 4.2, -4.2, -7
+  radius 1
+  material "black_rubber"
+}
+
