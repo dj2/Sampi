@@ -15,27 +15,30 @@ require(['/js/importer.js', '/js/renderer.js']);
       background-color: green;
       color: white;
     }
-    textarea { margin: 10px; }
     img {
-      margin: 10px;
       border: 1px solid #aaa;
     }
     canvas { display: none; }
+    .container { padding: 20px; }
+    .left { padding-right: 10px; }
+    input { font-size: 16px; }
     </style>
 
-    <div class='layout horizontal'>
-      <div class='layout vertical'>
-        <textarea id='text' rows='40' cols='100'>
-          {"width": 200, "height": 200}
-        </textarea>
-        <paper-button raised on-click='trace'>trace</paper-button>
+    <div class='container layout horizontal'>
+      <div class='left layout vertical flex'>
+        <div class='layout horizontal'>
+          <input type='text' id='remote' class='flex'
+                 value='http://localhost:8000/data/three-spheres.scene' />
+          <paper-button raised on-click='trace'>trace</paper-button>
+        </div>
+        <code class='flex'><pre id='src'></pre></code>
       </div>
 
       <div class='layout vertical start flex'>
-        <span id='status'></span>
-
         <img src='' id='img' width='500' height='500'>
         <canvas id='canvas' width='500' height='500'></canvas>
+
+        <span id='status'></span>
       </div>
     </div>
   </template>
@@ -72,26 +75,37 @@ require(['/js/importer.js', '/js/renderer.js']);
     },
 
     trace: function() {
-      this.$.status.textContent = 'rendering ...';
+      this.$.status.textContent = 'loading ...';
 
-      let scene = Importer.importScene(this.$.text.value);
-      this.width_ = scene.width();
-      this.height_ = scene.height();
-      this.updateSizes_();
+      Importer.importScene(this.$.remote.value)
+        .then((res) => {
+          this.$.src.innerText = res.src;
+          this.$.status.textContent = 'rendering ...';
 
-      let renderer = Renderer.createRenderer(scene);
-      let imageData = this.ctx_.getImageData(0, 0, this.width_, this.height_);
 
-      renderer.render(imageData, () => {
-          this.$.img.src = this.$.canvas.toDataURL('image/png');
+          this.width_ = res.scene.width;
+          this.height_ = res.scene.height;
+          this.updateSizes_();
+
+          let renderer = Renderer.createRenderer(res.scene);
+          let imageData = this.ctx_.getImageData(0, 0, this.width_, this.height_);
+
+          renderer.render(imageData, () => {
+              this.$.img.src = this.$.canvas.toDataURL('image/png');
+            })
+            .then((msg) => {
+              this.$.img.src = this.$.canvas.toDataURL('image/png');
+              this.$.status.textContent = 'render complete';
+            })
+            .catch((reason) => {
+              console.error(reason);
+              this.$.status.textContent = 'render error: ' + reason;
+            });
         })
-        .then((msg) => {
-          this.$.img.src = this.$.canvas.toDataURL('image/png');
-          this.$.status.textContent = 'render complete';
-        })
-        .catch((reason) => {
-          this.$.status.textContent = 'render error: ' + reason;
-        });
+      .catch((reason) => {
+        console.error(reason);
+        this.$.status.textContent = 'import error: ' + reason;
+      });
     }
   });
   </script>

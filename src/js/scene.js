@@ -1,15 +1,26 @@
 'use strict';
 
 class Scene {
-  constructor(data) {
-    this.data_ = JSON.parse(data);
+  constructor() {
+    this.width_ = 500;
+    this.height_ = 500;
+
+    Object.seal(this);
   }
 
-  width() {
-    return this.data_.width;
+  set width(width) {
+    this.width_ = width;
   }
 
-  height() {
-    return this.data_.height;
+  set height(height) {
+    this.height_ = height;
+  }
+
+  get width() {
+    return this.width_;
+  }
+
+  get height() {
+    return this.height_;
   }
 }
