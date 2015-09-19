@@ -24,17 +24,37 @@ describe('Scene Importer', () => {
 
   it ('trims whitespace', () => {
     let si = new SceneImporter("  {  \n something  some\n  }");
-    expect(si.dataForTesting()).toBe("{\nsomething  some\n}");
+    expect(si.dataForTesting_()).toBe("{\nsomething  some\n}");
   });
 
   it ('strips blank lines', () => {
     let si = new SceneImporter("{\n\n}");
-    expect(si.dataForTesting()).toBe("{\n}");
+    expect(si.dataForTesting_()).toBe("{\n}");
   });
 
   it ('removes comments from the input', () => {
     let si = new SceneImporter("{ # comment\n# another comment\n}");
-    expect(si.dataForTesting()).toBe("{\n}");
+    expect(si.dataForTesting_()).toBe("{\n}");
+  });
+
+  describe('scene block', () => {
+    it ('parses width and height', () => {
+      let scene = (new SceneImporter("scene {\nwidth 1024\nheight 2048\n}")).import();
+      expect(scene.width).toBe(1024);
+      expect(scene.height).toBe(2048);
+    });
+
+    it ('handles bad width', () => {
+      expect(() => {
+        (new SceneImporter("scene {\nwidth\n}")).import();
+      }).toThrow();
+    });
+
+    it ('handles bad height', () => {
+      expect(() => {
+        (new SceneImporter("scene {\nheight\n}")).import();
+      }).toThrow();
+    });
   });
 });
 </script>
