@@ -14,8 +14,8 @@ class Importer {
       req.onload = () => {
         if (req.status === 200) {
           resolve({
-            src: req.response,
-            scene: (new SceneImporter(req.response)).import()
+            src: req.responseText,
+            scene: (new SceneImporter(req.responseText)).import()
           });
         } else {
           reject(Error(req.statusText));

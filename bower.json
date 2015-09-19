@@ -17,6 +17,7 @@
     "tests"
   ],
   "dependencies": {
+    "jasmine-ajax": "~3.2.0",
     "jasmine-core": "jasmine#~2.3.4",
     "paper-button": "PolymerElements/paper-button#~1.0.4",
     "paper-header-panel": "PolymerElements/paper-header-panel#~1.0.5",

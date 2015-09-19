@@ -112,10 +112,10 @@
               this.$.status.textContent = 'render error: ' + reason;
             });
         })
-      .catch((reason) => {
-        console.error(reason);
-        this.$.status.textContent = 'import error: ' + reason;
-      });
+        .catch((reason) => {
+          console.error(reason);
+          this.$.status.textContent = 'import error: ' + reason;
+        });
     }
   });
   </script>

@@ -4,6 +4,66 @@
 'use strict';
 
 describe('Importer', () => {
+  beforeEach(() => {
+    jasmine.Ajax.install();
+  });
+
+  afterEach(() => {
+    jasmine.Ajax.uninstall();
+  });
+
+  describe('404 response', () => {
+    let doneFn = jasmine.createSpy('done');
+    let url = 'http://localhost:8000/test_scene.html';
+
+    beforeEach((done) => {
+      jasmine.Ajax.stubRequest(url).andReturn({
+        'status': 404,
+        'contentType': 'text/plain'
+      });
+
+      Importer.importScene(url)
+        .then((res) => {
+          doneFn('succeeded');
+          done.fail('Call succeeded');
+        })
+        .catch((err) => {
+          doneFn('failed');
+          done();
+        });
+    });
+
+    it ('rejects on error', () => {
+      expect(doneFn).toHaveBeenCalledWith('failed');
+    });
+  });
+
+  describe ('200 response', () => {
+    let doneFn = jasmine.createSpy('done');
+    let url = 'http://localhost:8000/test_scene.html';
+
+    beforeEach((done) => {
+      jasmine.Ajax.stubRequest(url).andReturn({
+        'status': 200,
+        'contentType': 'text/plain',
+        'responseText': '{}'
+      });
+
+      Importer.importScene(url)
+        .then((res) => {
+          doneFn('succeeded');
+          done();
+        })
+        .catch((err) => {
+          doneFn('failed');
+          done.fail('Call failed ' + err);
+        });
+    });
+
+    it ('resolves on 200 response', () => {
+      expect(doneFn).toHaveBeenCalledWith('succeeded');
+    });
+  });
 });
 </script>
 
