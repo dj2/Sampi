@@ -7,14 +7,18 @@
 
 class SceneImporter {
   constructor(data) {
-    this.data_ = data.split(/\n/)
-        // Cleanup whitespace on the start/end of lines.
-        .map((line) => line.trim())
-        // Strip comment lines and blink lines.
-        .filter((line) => !line.startsWith('#') && line !== '')
-        // Trim comments from the end of all lines.
-        .map((line) => line.replace(/\s*#.*$/, ''))
-        .join('\n');
+    this.data_ = '';
+
+    if (data) {
+      this.data_ = data.split(/\n/)
+          // Cleanup whitespace on the start/end of lines.
+          .map((line) => line.trim())
+          // Strip comment lines and blink lines.
+          .filter((line) => !line.startsWith('#') && line !== '')
+          // Trim comments from the end of all lines.
+          .map((line) => line.replace(/\s*#.*$/, ''))
+          .join('\n');
+    }
 
     Object.seal(this);
   }
@@ -24,6 +28,10 @@ class SceneImporter {
 
 
     return scene;
+  }
+
+  dataForTesting() {
+    return this.data_;
   }
 }
 </script>
