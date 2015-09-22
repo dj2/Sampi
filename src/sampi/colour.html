@@ -1,0 +1,26 @@
+<!doctype html>
+
+<script>
+'use strict';
+
+class Colour {
+  constructor(r, g, b, a) {
+    this.r_ = r || 0;
+    this.g_ = g || 0;
+    this.b_ = b || 0;
+    this.a_ = a || 1.0;
+
+    Object.seal(this);
+  }
+
+  set r(val) { this.r_ = val; }
+  set g(val) { this.g_ = val; }
+  set b(val) { this.b_ = val; }
+  set a(val) { this.a_ = val; }
+
+  get r() { return this.r_; }
+  get g() { return this.g_; }
+  get b() { return this.b_; }
+  get a() { return this.a_; }
+}
+</script>

@@ -1,0 +1,23 @@
+<!doctype html>
+
+<link rel='import' href='/sampi/colour.html'>
+
+<script>
+'use strict';
+
+describe('Colour', () => {
+  it ('sets default colours', () => {
+    let c = new Colour();
+    expect(c).toEqual(new Colour(0, 0, 0, 1));
+  });
+
+  it ('allows setting/retrieving the colour', () => {
+    let c = new Colour();
+    c.r = .8;
+    c.g = .2;
+    c.b = .6;
+    c.a = .1;
+    expect(c).toEqual(new Colour(.8, .2, .6, .1));
+  });
+});
+</script>

@@ -43,7 +43,7 @@
       </div>
 
       <div class='layout vertical start flex'>
-        <img src='' id='img' width='500' height='500'>
+        <img src='' id='img'>
         <canvas id='canvas' width='500' height='500'></canvas>
 
         <span id='status'></span>
@@ -62,12 +62,9 @@
     height_: 500,
 
     ready: function() {
-      this.updateSizes_();
-
       this.ctx_ = this.$.canvas.getContext('2d');
-      this.ctx_.fillStyle = 'white';
-      this.ctx_.fillRect(0, 0, 500, 500);
 
+      this.updateSizes_();
       this.trace();
     },
 
@@ -82,6 +79,9 @@
       let img = this.$.img;
       img.style.width = this.width_ + 'px';
       img.style.height = this.height_ + 'px';
+
+      this.ctx_.fillStyle = 'white';
+      this.ctx_.fillRect(0, 0, this.width_, this.height_);
     },
 
     trace: function() {
@@ -92,7 +92,6 @@
           this.$.src.innerText = res.src;
           this.$.status.textContent = 'rendering ...';
 
-
           this.width_ = res.scene.width;
           this.height_ = res.scene.height;
           this.updateSizes_();
@@ -100,11 +99,16 @@
           let renderer = Renderer.createRenderer(res.scene);
           let imageData = this.ctx_.getImageData(0, 0, this.width_, this.height_);
 
+          let drawImageData = () => {
+            this.ctx_.putImageData(imageData, 0, 0);
+            this.$.img.src = this.$.canvas.toDataURL('image/png');
+          }
+
           renderer.render(imageData, () => {
-              this.$.img.src = this.$.canvas.toDataURL('image/png');
+              drawImageData();
             })
-            .then((msg) => {
-              this.$.img.src = this.$.canvas.toDataURL('image/png');
+            .then(() => {
+              drawImageData();
               this.$.status.textContent = 'render complete';
             })
             .catch((reason) => {

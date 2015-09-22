@@ -8,7 +8,19 @@ class Renderer {
     return {
       render: function(output, cb) {
         return new Promise((resolve, reject) => {
-          resolve('whee');
+          for (let i = 0; i < scene.width; i++) {
+            for (let j = 0; j < scene.height; j++) {
+              let colour = scene.backgroundColour;
+
+              let idx = i * 4 + (j * scene.width * 4);
+              output.data[idx + 0] = 255 * colour.r;
+              output.data[idx + 1] = 255 * colour.g;
+              output.data[idx + 2] = 255 * colour.b;
+              output.data[idx + 3] = 255 * colour.a;
+            }
+            cb.call();
+          }
+          resolve();
         });
       }
     };

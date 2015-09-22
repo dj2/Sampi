@@ -1,5 +1,7 @@
 <!doctype html>
 
+<link rel='import' href='/sampi/colour.html'>
+
 <script>
 'use strict';
 
@@ -7,24 +9,18 @@ class Scene {
   constructor() {
     this.width_ = 500;
     this.height_ = 500;
+    this.backgroundColour_ = new Colour(0, 0, 0, 1);
 
     Object.seal(this);
   }
 
-  set width(width) {
-    this.width_ = width;
-  }
+  set width(width) { this.width_ = width; }
+  set height(height) { this.height_ = height; }
 
-  set height(height) {
-    this.height_ = height;
-  }
+  get width() { return this.width_; }
+  get height() { return this.height_; }
 
-  get width() {
-    return this.width_;
-  }
-
-  get height() {
-    return this.height_;
-  }
+  set backgroundColour(bg) { this.backgroundColour_ = bg; }
+  get backgroundColour() { return this.backgroundColour_; }
 }
 </script>

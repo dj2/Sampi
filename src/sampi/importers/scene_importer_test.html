@@ -1,5 +1,7 @@
 <!doctype html>
 
+<link rel='import' href='/sampi/importers/scene_importer.html'>
+
 <script>
 'use strict';
 
@@ -54,6 +56,11 @@ describe('Scene Importer', () => {
       expect(() => {
         (new SceneImporter("scene {\nheight\n}")).import();
       }).toThrow();
+    });
+
+    it ('handles background_colour', () => {
+      let scene = (new SceneImporter("scene {\nbackground_colour .8, 0.8, .8\n}")).import();
+      expect(scene.backgroundColour).toEqual(new Colour(.8, .8, .8));
     });
   });
 });

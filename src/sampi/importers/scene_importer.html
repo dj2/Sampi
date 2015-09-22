@@ -1,5 +1,6 @@
 <!doctype html>
 
+<link rel='import' href='/sampi/colour.html'>
 <link rel='import' href='/sampi/scene.html'>
 
 <script>
@@ -68,10 +69,21 @@ class SceneImporter {
 
         this.scene_.height = parseInt(parts[1]);
 
+      } else if (line.startsWith("background_colour")) {
+        let colour = line.slice("background_colour".length + 1);
+        this.scene_.backgroundColour = this.parseColour_(colour);
+
       } else {
         console.log('scene unmatched: ' + line);
       }
     }
+  }
+
+  parseColour_(colour) {
+    let parts = colour.split(/,/);
+    if (parts.length < 3 || parts.length > 4)
+      throw new Error('Invalid number of colour parts: ' + colour);
+    return new Colour(...(parts.map((p) => parseFloat(p.trim()))));
   }
 
   dataForTesting_() {
