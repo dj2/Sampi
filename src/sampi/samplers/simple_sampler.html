@@ -1,0 +1,29 @@
+<!doctype html>
+
+<script>
+'use strict';
+
+class SimpleSampler {
+  constructor(scene) {
+    this.scene_ = scene;
+
+    Object.seal(this);
+  }
+
+  samples() {
+    let gen = function *() {
+      for (let i = 0; i < this.scene_.width; i++) {
+        for (let j = 0; j < this.scene_.height; j++) {
+          yield {
+            x: i,
+            y: j
+          };
+        }
+      }
+    }
+    let generator = gen.bind(this);
+    return generator();
+  }
+}
+
+</script>

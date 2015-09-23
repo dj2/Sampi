@@ -3,6 +3,7 @@
 
 <link rel='import' href='/sampi/importer.html'>
 <link rel='import' href='/sampi/renderer.html'>
+<link rel='import' href='/sampi/sampler.html'>
 
 <dom-module id='sampi-tracer'>
   <template>
@@ -96,7 +97,8 @@
           this.height_ = res.scene.height;
           this.updateSizes_();
 
-          let renderer = Renderer.createRenderer(res.scene);
+          let sampler = Sampler.create(res.scene);
+          let renderer = Renderer.create(res.scene);
           let imageData = this.ctx_.getImageData(0, 0, this.width_, this.height_);
 
           let drawImageData = () => {
@@ -104,7 +106,7 @@
             this.$.img.src = this.$.canvas.toDataURL('image/png');
           }
 
-          renderer.render(imageData, () => {
+          renderer.render(sampler, imageData, () => {
               drawImageData();
             })
             .then(() => {
