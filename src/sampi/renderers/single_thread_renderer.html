@@ -1,0 +1,31 @@
+<!doctype html>
+
+<script>
+'use strict';
+
+class SingleThreadRenderer {
+  constructor(scene) {
+    this.scene_ = scene;
+
+    Object.seal(this);
+  }
+
+  render(output, cb) {
+    return new Promise((resolve, reject) => {
+      for (let i = 0; i < this.scene_.width; i++) {
+        for (let j = 0; j < this.scene_.height; j++) {
+          let colour = this.scene_.backgroundColour;
+
+          let idx = i * 4 + (j * this.scene_.width * 4);
+          output.data[idx + 0] = 255 * colour.r;
+          output.data[idx + 1] = 255 * colour.g;
+          output.data[idx + 2] = 255 * colour.b;
+          output.data[idx + 3] = 255 * colour.a;
+        }
+        cb.call();
+      }
+      resolve();
+    });
+  }
+}
+</script>
