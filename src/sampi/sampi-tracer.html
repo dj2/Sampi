@@ -101,16 +101,10 @@
           let renderer = Renderer.create(res.scene);
           let imageData = this.ctx_.getImageData(0, 0, this.width_, this.height_);
 
-          let drawImageData = () => {
-            this.ctx_.putImageData(imageData, 0, 0);
-            this.$.img.src = this.$.canvas.toDataURL('image/png');
-          }
-
-          renderer.render(sampler, imageData, () => {
-              drawImageData();
-            })
+          renderer.render(sampler, imageData)
             .then(() => {
-              drawImageData();
+              this.ctx_.putImageData(imageData, 0, 0);
+              this.$.img.src = this.$.canvas.toDataURL('image/png');
               this.$.status.textContent = 'render complete';
             })
             .catch((reason) => {

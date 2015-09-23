@@ -10,9 +10,8 @@ class SingleThreadRenderer {
     Object.seal(this);
   }
 
-  render(sampler, output, cb) {
+  render(sampler, output) {
     return new Promise((resolve, reject) => {
-      let count = 0;
       let samples = sampler.samples();
       let res = samples.next();
       while (res && !res.done) {
@@ -33,10 +32,6 @@ class SingleThreadRenderer {
         output.data[idx + 1] = 255 * colour.g;
         output.data[idx + 2] = 255 * colour.b;
         output.data[idx + 3] = 255 * colour.a;
-
-        count += 1;
-        if ((count % this.scene_.width) === 0)
-          cb.call();
 
         res = samples.next();
       }
