@@ -14,15 +14,50 @@ class SimpleSampler {
     let gen = function *() {
       for (let i = 0; i < this.scene_.width; i++) {
         for (let j = 0; j < this.scene_.height; j++) {
-          yield {
-            x: i,
-            y: j
-          };
+          yield new SimpleSample(i, j)
         }
       }
     }
     let generator = gen.bind(this);
     return generator();
+  }
+}
+
+class SimpleSample {
+  constructor(x, y) {
+    this.x_ = x;
+    this.y_ = y;
+
+    this.colour_ = undefined;
+
+    Object.seal(this);
+  }
+
+  samples() {
+    let gen = function *() {
+      yield {
+        x: this.x_,
+        y: this.y_
+      };
+    }
+    let generator = gen.bind(this);
+    return generator();
+  }
+
+  addColour(colour) {
+    this.colour_ = colour;
+  }
+
+  colour() {
+    return this.colour_;
+  }
+
+  get x() {
+    return this.x_;
+  }
+
+  get y() {
+    return this.y_;
   }
 }
 

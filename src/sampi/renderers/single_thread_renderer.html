@@ -11,25 +11,34 @@ class SingleThreadRenderer {
   }
 
   render(sampler, output, cb) {
-    let samples = sampler.samples();
-
     return new Promise((resolve, reject) => {
       let count = 0;
+      let samples = sampler.samples();
       let res = samples.next();
       while (res && !res.done) {
-        let colour = this.scene_.backgroundColour;
+        let sample = res.value;
 
-        let idx = res.value.x * 4 + (res.value.y * this.scene_.width * 4);
+        let subsamples = sample.samples();
+        res = subsamples.next();
+        while (res && !res.done) {
+          let colour = this.scene_.backgroundColour;
+
+          sample.addColour(colour);
+          res = subsamples.next();
+        }
+
+        let idx = sample.x * 4 + (sample.y * this.scene_.width * 4);
+        let colour = sample.colour();
         output.data[idx + 0] = 255 * colour.r;
         output.data[idx + 1] = 255 * colour.g;
         output.data[idx + 2] = 255 * colour.b;
         output.data[idx + 3] = 255 * colour.a;
 
-        res = samples.next();
         count += 1;
-
         if ((count % this.scene_.width) === 0)
           cb.call();
+
+        res = samples.next();
       }
       resolve();
     });
